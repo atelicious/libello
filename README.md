@@ -15,6 +15,7 @@
 ### Target Functionalities
 
 - [] Add categories to todo (Not yet started, Ongoing, Done, Cancelled, Will not do, Stale)
+- [] Add separate category for Stale (Yes/No)
 - [] Get existing todos by category
 - [] Add deadline to todos
 - [] Move todos to to stale when past deadline
