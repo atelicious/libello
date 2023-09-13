@@ -1,7 +1,7 @@
 # Temporary name, this will hold all classes regarding TODO retrieval and modification
 
 from flask_restful import reqparse, Resource
-from lib.data_models import Todos
+from api.v1.resources.models.data_models import Todos
 
 # Sample TODO DB, will be changed to a standard Postgres DB once APIs are done
 DB = {

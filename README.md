@@ -24,3 +24,19 @@
 - [] Add logging in/out functions
 - [] Research Flask-alchemy (Checkout DigitalOcean Flask-Postgres-SQLAlchemy guide)
 - [] Finalize DB for todos and users
+
+### Directory
+
+config
+api
+    -v1
+        -resources
+            -controller
+                -todo_controller
+            -models
+                -todo_model
+        -routes
+lib
+    -constants
+    -db_methods
+app.py

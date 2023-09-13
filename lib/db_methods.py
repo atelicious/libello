@@ -1,3 +1,3 @@
 # This should hold our methods for inserting, modifying and deleting records in DB
 
-from data_models import Todos
+from api.v1.resources.models.data_models import Todos
