@@ -68,7 +68,10 @@ class TodoList(Resource):
         # querying all DB entries
         # In the future we need to query todos based on other categories so
         # need to refactor this as well
-        return ('DB is missing', 500) if DB is None else DB
+
+        todos = Todos.query.all()
+
+        return ('DB is missing', 500) if todos is None else todos
 
     # Add new todo item
     def post(self):

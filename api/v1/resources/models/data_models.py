@@ -1,5 +1,6 @@
 from app import db
 from sqlalchemy.sql import func
+from lib.constants import TaskStatus
 
 # Place our Postgres Models here
 
@@ -35,11 +36,11 @@ class Todos(db.Model):
     task_details = db.Column(db.String(300), nullable=False)
     task_status = db.Column(db.String(30), nullable=False)
     created_at = db.Column(db.DateTime(timezone=True), server_default=func.now())
-    task_deadline = db.Column(db.DateTime(), nullable=False)
+    task_deadline = db.Column(db.DateTime(), nullable=True)
     stale_status = db.Column(db.Boolean, server_default=False, default=False)
 
-    def __init__(self, task_id, task_name, task_details, task_status, created_at,
-                 task_deadline, stale_status):
+    def __init__(self, task_id: int, task_name: str, task_details: str, task_status: TaskStatus, created_at: str,
+                 task_deadline: str, stale_status: bool):
         self.task_id = task_id
         self.task_name = task_name
         self.task_details = task_details
