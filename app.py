@@ -1,14 +1,14 @@
-from flask import Flask
-from api.v1.resources import routes
+# from flask import Flask
+# from api.v1.resources.routes import create_resource
 # from lib import routes
-from flask_sqlalchemy import SQLAlchemy
-from flask_migrate import Migrate
-from os.path import abspath, dirname, join
+# from flask_sqlalchemy import SQLAlchemy
+# from flask_migrate import Migrate
+# from os.path import abspath, dirname, join
 # from api.v1.resources.models.data_models import Todos
 # from lib.constants import TaskStatus
 
-app = Flask(__name__)
-api = routes.create_resource(app)
+# app = Flask(__name__)
+
 
 # Goal: Postgresql DB configs
 # put connections here for the postgres db
@@ -16,11 +16,13 @@ api = routes.create_resource(app)
 
 # For now, we will use SQLite to test the functionality of the API then migrate from there
 
-basedir = abspath(dirname(__file__))
+# basedir = abspath(dirname(__file__))
 
-app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///' + join(basedir, 'database.db')
-app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
-db = SQLAlchemy(app)
+# app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///' + join(basedir, 'database.db')
+# app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
+# db = SQLAlchemy(app)
+
+# api = create_resource(app)
 
 # db.create_all()
 
@@ -30,9 +32,13 @@ db = SQLAlchemy(app)
 
 # db.session.commit()
 
+from backend import app
 
 if __name__ == '__main__':
     app.run(debug=True)
 
 ## Scratch all of the models, stick to sqlite first then move towards postgres
 ## sample: https://www.codium.ai/blog/flask-sqlalchemy-tutorial/
+
+
+# 9-18-2023: YAHOOOO abstraction is working for now
