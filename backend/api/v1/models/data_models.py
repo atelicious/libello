@@ -7,8 +7,8 @@ from datetime import datetime
 class Todos(db.Model):
     __tablename___ = 'todos_table'
 
-    task_id = db.Column(db.Integer, primary_key=True)
-    task_name = db.Column(db.String(100), nullable=False)
+    task_id = db.Column(db.Integer, primary_key=True, autoincrement=True)
+    task_name = db.Column(db.String(100), nullable=False, unique=True)
     task_details = db.Column(db.String(300), nullable=False)
     task_status = db.Column(db.String(30), nullable=False)
     created_at = db.Column(db.DateTime(timezone=True), server_default=func.now())

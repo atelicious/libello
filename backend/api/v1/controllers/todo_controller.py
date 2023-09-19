@@ -2,8 +2,10 @@
 
 from flask_restful import reqparse, Resource
 from backend.api.v1.models.data_models import Todos
-from lib.db_methods import get_todo_by_id, update_todo_by_id 
+from lib.db_methods import get_todo_by_id, update_todo_by_id, create_todo
 from flask import request
+from sqlalchemy import func
+from lib.todo_parser import todo_parser
 
 
 # Sample TODO DB, will be changed to a standard Postgres DB once APIs are done
@@ -81,12 +83,16 @@ class TodoList(Resource):
     # Add new todo item
     def post(self):
 
+        parser = todo_parser()
         args = parser.parse_args()
-        # get current max todo_id on DB, and add 1
-        todo_id = int(max(DB.keys()).lstrip('todo')) + 1
-        todo_id = 'todo%i' % todo_id
-        
-        # TODO: add logging here and handling if we can't connect to DB
-        DB[todo_id] = {'task': args['task']}
 
-        return f'Successfully added TODO {todo_id}', 201
+        # Map all keys and values of the POST request body into a dictionary if the value existss
+        args = dict((key, value) for key, value in args.items() if value)
+        success, content = create_todo(args)
+
+        if not success:
+            return content, 400
+
+        # TODO: add logging here and handling if we can't connect to DB
+        # DB[todo_id] = {'task': args['task']}
+        return content, 201
