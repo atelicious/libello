@@ -2,7 +2,9 @@
 
 from flask_restful import reqparse, Resource
 from backend.api.v1.models.data_models import Todos
-from flask import jsonify
+from lib.db_methods import get_todo_by_id, update_todo_by_id 
+from flask import request
+
 
 # Sample TODO DB, will be changed to a standard Postgres DB once APIs are done
 DB = {
@@ -14,12 +16,12 @@ DB = {
 parser = reqparse.RequestParser()
 parser.add_argument('task')
 
-def get_todo_by_id(todo_id):
+# def get_todo_by_id(todo_id):
 
-    if not todo_id in DB:
-        return False, {'status':'todo_id not in DB'}
+#     if not todo_id in DB:
+#         return False, {'status':'todo_id not in DB'}
 
-    return True, DB[todo_id]
+#     return True, DB[todo_id]
 
 # TODO
 # this will be the new TODO resource, refactor this more
@@ -35,27 +37,28 @@ class Todo(Resource):
             #TODO: add logging here
             return content, 404
         
-        return content, 200
+        return content.to_dict(), 200
     
     # Update specific todo by todo_id
 
     def put(self, todo_id):
 
-        success, content = get_todo_by_id(todo_id)
+        # success, content = get_todo_by_id(todo_id)
 
-        if not success:
-            # TODO: add logging here
-            return content, 404
+        # if not success:
+        #     # TODO: add logging here
+        #     return content, 404
         
         args = parser.parse_args()
-        new_task = {'task': args['task']}
-        
+        # new_task = {'task': args['task']}
+        # args = dict((key, value) for key, value in args.items() if value)
+        # print(args)
         # Set new task in DB
         # TODO: add logging here
-        DB[todo_id] = new_task
+        # success, content = update_todo_by_id(content)
 
-        return f'Successfully updated TODO with id: {todo_id}', 201
-
+        # return f'Successfully updated TODO with id: {todo_id}', 201
+        return {'args': args['task']}, 201
 # TODO
 # this will handle showing all todos, and adding new tods via POST
 

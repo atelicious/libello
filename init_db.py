@@ -4,6 +4,7 @@ from lib.constants import TaskStatus
 from datetime import datetime
 
 with app.app_context():
+    db.drop_all()
     db.create_all()
 
     from backend.api.v1.models.data_models import Todos
@@ -18,3 +19,5 @@ with app.app_context():
 
     db.session.add(todo2)
     db.session.commit()
+
+    db.session.close()

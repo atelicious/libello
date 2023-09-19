@@ -26,17 +26,14 @@
 - [] Finalize DB for todos and users
 
 ### Directory
+```
+├── backend
+│   └── api
+│       └── v1
+│           ├── controllers
+│           └── models
+├── config
+├── instance
+└── lib
 
-config
-api
-    -v1
-        -resources
-            -controller
-                -todo_controller
-            -models
-                -todo_model
-        -routes
-lib
-    -constants
-    -db_methods
-app.py
+```
