@@ -5,7 +5,7 @@ from backend.api.v1.models.data_models import Todos
 from lib.db_methods import get_todo_by_id, update_todo_by_id, create_todo
 from flask import request
 from sqlalchemy import func
-from lib.todo_parser import todo_parser
+from lib.todo_parser import todo_parser, update_todo_parser
 
 
 # Sample TODO DB, will be changed to a standard Postgres DB once APIs are done
@@ -51,16 +51,26 @@ class Todo(Resource):
         #     # TODO: add logging here
         #     return content, 404
         
+        parser = update_todo_parser()
         args = parser.parse_args()
-        # new_task = {'task': args['task']}
-        # args = dict((key, value) for key, value in args.items() if value)
-        # print(args)
-        # Set new task in DB
+        args = dict((key, value) for key, value in args.items() if value)
+
+        success, todo_obj = get_todo_by_id(todo_id)
+
+        if not success:
+            #TODO: add logging here
+            return content, 404
+        
+        success, content = update_todo_by_id(todo_obj, args)
+
+        if not success:
+            return content, 400
+        
         # TODO: add logging here
         # success, content = update_todo_by_id(content)
 
-        # return f'Successfully updated TODO with id: {todo_id}', 201
-        return {'args': args['task']}, 201
+        return f'Successfully updated TODO with id: {todo_id}', 201
+        # return content, 201
 # TODO
 # this will handle showing all todos, and adding new tods via POST
 

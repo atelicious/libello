@@ -5,6 +5,13 @@ from datetime import datetime
 
 
 class Todos(db.Model):
+    """sumary_line
+    
+    Keyword arguments:
+    argument -- description
+    Return: return_description
+    """
+    
     __tablename___ = 'todos_table'
 
     task_id = db.Column(db.Integer, primary_key=True, autoincrement=True)

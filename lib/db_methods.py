@@ -3,8 +3,9 @@ from typing import Type
 from backend.api.v1.models.data_models import Todos
 from backend import db
 from datetime import datetime
+from ast import literal_eval
 
-def get_todo_by_id(todo_id: int) -> tuple[bool, object]:
+def get_todo_by_id(todo_id: int) -> tuple[bool, Todos]:
     """Gets todo using todo_id, returns a tuple and the todo object when found
     """
     
@@ -21,8 +22,30 @@ def get_todo_by_id(todo_id: int) -> tuple[bool, object]:
 
     return True, todo
 
-def update_todo_by_id(todo_id: int) -> tuple[bool, dict]:
-    pass
+def update_todo_by_id(todo: Todos, args: dict) -> tuple[bool, dict]:
+    updated_details = literal_eval(args.get('updated_task_details'))
+    protected_fields = ['id', 'created_at', 'stale_status']
+
+    #prevent updating of id, created_at, and stale_status for now
+    protected_field_check = any(fields in updated_details.keys() for fields in protected_fields)
+
+    if protected_field_check:
+        return False, {'message': f'Cannot update protected fields'}
+    
+    for keys, values in updated_details.items():
+        if hasattr(todo, keys):
+            setattr(todo, keys, values)
+        else: 
+            return False, {'message': f'Error updating todo attribute "{keys}" with value "{values}"'}
+
+    try:
+        db.session.add(todo)
+        db.session.commit()
+    except Exception as e:
+        return False, {'message': f'{e}'}
+    
+    return True, {'message: successfully edited todo'}
+    # return True, updated_details
 
 def create_todo(args: dict) -> tuple[bool, object]:
     task_id = args.get('task_id')

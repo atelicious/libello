@@ -9,6 +9,6 @@ def create_resource(app):
 
     # add routes here
     api.add_resource(TodoList, '/todos')
-    api.add_resource(Todo, '/todos/<todo_id>')
+    api.add_resource(Todo, '/todos/<int:todo_id>')
 
     return api
