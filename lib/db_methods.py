@@ -42,12 +42,12 @@ def update_todo_by_id(todo: Todos, args: dict) -> tuple[bool, dict]:
         db.session.add(todo)
         db.session.commit()
     except Exception as e:
+        db.session.rollback()
         return False, {'message': f'{e}'}
     
     return True, {'message: successfully edited todo'}
-    # return True, updated_details
 
-def create_todo(args: dict) -> tuple[bool, object]:
+def create_todo(args: dict) -> tuple[bool, dict]:
     task_id = args.get('task_id')
     task_name = args.get('task_name')
     task_details = args.get('task_details')
@@ -65,3 +65,18 @@ def create_todo(args: dict) -> tuple[bool, object]:
         return False, {'message': f'{e}'}
 
     return True, {'message': 'Successfully added new todo'}
+
+def delete_todo_by_id(todo_id: int) -> tuple[bool, dict]:
+
+    success, todo = get_todo_by_id(todo_id)
+    if not success:
+        return False, {'message': 'Cannot delete non-existing todo'}
+    
+    try:
+        db.session.delete(todo)
+        db.session.commit()
+    except Exception as e:
+        db.session.rollback()
+        return False, {'message': f'{e}'}
+    
+    return True, {'message': 'successfully deleted todo record'}

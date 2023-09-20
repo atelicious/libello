@@ -2,7 +2,7 @@
 
 from flask_restful import reqparse, Resource
 from backend.api.v1.models.data_models import Todos
-from lib.db_methods import get_todo_by_id, update_todo_by_id, create_todo
+from lib.db_methods import get_todo_by_id, update_todo_by_id, create_todo, delete_todo_by_id
 from flask import request
 from sqlalchemy import func
 from lib.todo_parser import todo_parser, update_todo_parser
@@ -70,7 +70,15 @@ class Todo(Resource):
         # success, content = update_todo_by_id(content)
 
         return f'Successfully updated TODO with id: {todo_id}', 201
-        # return content, 201
+    
+    def delete(self, todo_id):
+        success, content = delete_todo_by_id(todo_id)
+
+        if not success:
+            return content, 404
+
+        return content, 200
+
 # TODO
 # this will handle showing all todos, and adding new tods via POST
 
