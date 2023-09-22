@@ -6,7 +6,8 @@ from datetime import datetime
 from ast import literal_eval
 
 def get_todo_by_id(todo_id: int) -> tuple[bool, Todos]:
-    """Gets todo using todo_id, returns a tuple and the todo object when found
+    """
+    Gets todo using todo_id, returns True and the todo object when founds
     """
     
     if not todo_id and type(todo_id) != int:
@@ -23,10 +24,12 @@ def get_todo_by_id(todo_id: int) -> tuple[bool, Todos]:
     return True, todo
 
 def update_todo_by_id(todo: Todos, args: dict) -> tuple[bool, dict]:
-    updated_details = literal_eval(args.get('updated_task_details'))
-    protected_fields = ['id', 'created_at', 'stale_status']
 
-    #prevent updating of id, created_at, and stale_status for now
+    # Get all updated details from the POST body
+    updated_details = literal_eval(args.get('updated_task_details'))
+
+    # Prevent updating of the todo object if the body contains protected fields
+    protected_fields = ['id', 'created_at', 'stale_status']
     protected_field_check = any(fields in updated_details.keys() for fields in protected_fields)
 
     if protected_field_check:
