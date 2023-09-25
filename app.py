@@ -1,14 +1,11 @@
-from flask import Flask
-from flask_restful import reqparse, abort, Api, Resource
-from lib import routes
-
-app = Flask(__name__)
-api = routes.create_resource(app)
+from backend import app
 
 if __name__ == '__main__':
     app.run(debug=True)
 
+## Scratch all of the models, stick to sqlite first then move towards postgres
+## sample: https://www.codium.ai/blog/flask-sqlalchemy-tutorial/
 
-    
-    
 
+# 9-18-2023: YAHOOOO abstraction is working for now
+# 9-22-2023: Cleanup for the backend, will merge as well the working backend version
